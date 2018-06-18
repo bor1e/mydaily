@@ -13,7 +13,7 @@ By now (ver 0.1.) the user still needs to navigate himself, to let the app know,
 ## How to install
 Using Python3. This app runs on the lightweight bottlepy framework, using mechanicalsoup for parsing.
 ```
-git clone ....
+git clone git@github.com:bor1e/mydaily.git
 pip install -r requirements
 ```
 ## Start Server
