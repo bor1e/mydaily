@@ -1,4 +1,5 @@
 from bottle import route, run, static_file, template, install, request, response, redirect
+import bottle
 from bottle_sqlite import SQLitePlugin
 from datetime import date, datetime
 import random
@@ -34,7 +35,7 @@ def log_to_logger(fn):
         return actual_response
     return _log_to_logger
 
-install(SQLitePlugin(dbfile='./db/bookmarks.db'))
+install(SQLitePlugin(dbfile='./bookmarks.db'))
 install(log_to_logger)
 
 @route('/')
