@@ -1,6 +1,6 @@
 from bottle import route, run, static_file, template, install, request, response, redirect
 from bottle_sqlite import SQLitePlugin
-from datetime import date
+from datetime import date, datetime
 import random
 from parser import Parser
 from functools import wraps
@@ -99,9 +99,10 @@ def next(db, user, category, next):
 def js(filename):
     return static_file(filename, root='./js/')
 
+@route('/webfonts/<filename>')
 @route('/css/<filename>')
 def css(filename):
     return static_file(filename, root='./css/')
 
 
-run(host='localhost', port=8770, debug=False, quiet=True)
+run(host='localhost', port=8770, debug=True, quiet=True)
