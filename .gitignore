@@ -1,3 +1,3 @@
 *.pyc
-./db/bookmarks.db
-./logfile.log
+db/*
+logfile.log

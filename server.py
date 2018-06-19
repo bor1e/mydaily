@@ -105,4 +105,4 @@ def css(filename):
     return static_file(filename, root='./css/')
 
 
-run(host='localhost', port=8770, debug=True, quiet=True)
+run(host='0.0.0.0', port=8770, debug=True, quiet=True)
