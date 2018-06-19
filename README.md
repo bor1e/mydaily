@@ -43,6 +43,7 @@ Next steps are:
 - now every request is being sent to chabad.org, and there are no text being saved in DB, which leads to overload. I think I will include also the current copy of all the sections, replacing specific section.
 - adding JS scrollspy, updating the db when user finished a portion, without any input from user, when specific user interested, `remembering where inside a section the person stoped reading`.
 - eventually adjust the reading time to real learning speed
+- defining order of books
 
 ## Bugs:
 Due to a fast developement, and some shortcuts, including testing, this app has bugs. Let's find and fix them =).

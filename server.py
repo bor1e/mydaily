@@ -59,7 +59,7 @@ def init(db):
 
 @route('/adduser/<username>')
 def adduser(db, username):
-    assert name.isalpha()
+    assert username.isalpha()
     today = date.today().strftime("%m-%d-%Y")
     if not request.get_cookie("user_id"):
         response.set_header('Set-Cookie', 'user_id='+str(username))
