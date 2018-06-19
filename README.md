@@ -1,14 +1,15 @@
-# MyDailyLearning:
-This is the first release. Version 0.1. Here you can see a demo: 
+# MyDaily:
+Personal Learning Compendium.
+This is the first release. Version 0.1. Here you can see a demo: [MyDaily](mydaily.online-shiurim.org)
 This application, is a simple parser from [chabad.org](https://chabad.org) which can be also extended to work with other websites as well. It is designed for the use with a smartphone.
-By now there are four books in the englsih version available: 
+By now there are four books in the english version available: 
  - HaYom Yom
  - Tora with Rashi
  - Rambam One Chapter a Day
  - Tanach with Rashi, starting with Sefer Yehoshua
 If you want me any books to add, let me know! The project was developed, within couple of days, to get it running and progress in learning. So few things needs to be done better, check the ToDo list below, and your welcome to suggest some Features. 
 
-By now (ver 0.1.) the user still needs to navigate himself, to let the app know, that he wants the next section of a specific book, otherwise he will get the same book as to the date he registered everyday.
+By now (ver 0.1.) the user still needs to navigate himself, to let the app know, that he wants the next section of a specific book, otherwise he will get the same book as to the date he registered.
 
 ## How to install
 Using Python3. This app runs on the lightweight bottlepy framework, using mechanicalsoup for parsing.
@@ -31,12 +32,17 @@ Now you are redirected to the specific entry of the user. Eventually a login, or
 ## Add books and other sources
 If you want me to add any books, please let me know!
 I am currently testing and working on better, more dynamical book structures and proper interfaces to be easy exchangeable und fluently interacting. Learning about other sources will enable me to define the interfaces for adding books better.
+Planning to add following books, in weekly basis:
+- Halacha
+- Mishna
+- Sefer Mizwot
 
 ## ToDo:
 Next steps are:
-- now every request is being sent to chabad.org, and there are no text being saved in DB, which leads to overload. I think I will include also the current copy of the section
-- adding JS scrollspy, updating the db when user finished a portion, without any input from user, when specific user interested.
-- eventually update the reading time 
+- create Object-Oriented approach for books, like an interface including all needed solutions
+- now every request is being sent to chabad.org, and there are no text being saved in DB, which leads to overload. I think I will include also the current copy of all the sections, replacing specific section.
+- adding JS scrollspy, updating the db when user finished a portion, without any input from user, when specific user interested, `remembering where inside a section the person stoped reading`.
+- eventually adjust the reading time to real learning speed
 
 ## Bugs:
 Due to a fast developement, and some shortcuts, including testing, this app has bugs. Let's find and fix them =).
