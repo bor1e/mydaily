@@ -2,6 +2,9 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <meta name="description" content="Personal Learning Compendium - Daily Learning. Learn in your own paste. Optimized for smartphone use.">
+        <meta name="keywords" content="Chumasch, Rashi, Dailylearning, Chabad, Chabad.org, Rmabam, Tanach, HaYomYom">
+        <meta name="author" content="Elyahu De">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Let's learn</title>
