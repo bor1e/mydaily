@@ -71,6 +71,12 @@ def adduser(db, username):
     db.execute('insert into bookmark values (?,?,?,?,?,?)', (username, today, today, today, 15785, (136/42.0),))
     redirect('/')
 
+@route('/setuser/<username>')
+def setuser(username):
+    assert username.isalpha()
+    response.set_header('Set-Cookie', 'user_id='+str(username))
+    redirect('/')
+
 #@route('/:user')
 def user(db, user):
     tora = db.execute('select tora from bookmark where user = ?', (user,)).fetchone()[0]
@@ -94,8 +100,6 @@ def add_source(db):
     #TODO: ERROR handling
     db.execute('insert into sources values (?)', (source,))
     redirect('/')
-
-
 
 @route('/js/<filename>')
 def js(filename):
