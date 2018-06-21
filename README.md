@@ -1,6 +1,6 @@
 # MyDaily:
 Personal Learning Compendium.
-This is the first release. Version 0.1. Here you can see a demo: [MyDaily](mydaily.online-shiurim.org)
+This is the first release. Version 0.1. Here you can see a demo: [MyDaily](http://mydaily.online-shiurim.org)
 This application, is a simple parser from [chabad.org](https://chabad.org) which can be also extended to work with other websites as well. It is designed for the use with a smartphone.
 By now there are four books in the english version available: 
  - HaYom Yom
