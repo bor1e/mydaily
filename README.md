@@ -7,9 +7,11 @@ By now there are four books in the english version available:
  - Tora with Rashi
  - Rambam One Chapter a Day
  - Tanach with Rashi, starting with Sefer Yehoshua
-If you want me any books to add, let me know! The project was developed, within couple of days, to get it running and progress in learning. So few things needs to be done better, check the ToDo list below, and your welcome to suggest some Features. 
+If you want me any books to add, let me know! The project was developed, within couple of days, to get it running and progress in learning. So few things need to be done (much) better. I hope to get to upgrade it soon. Check the ToDo list below, and your welcome to suggest some Features. 
 
 By now (ver 0.1.) the user still needs to navigate himself, to let the app know, that he wants the next section of a specific book, otherwise he will get the same book as to the date he registered.
+
+Concerning the bottle and the uwsgi framework, I am not sure, if I will stay with them, because originally when I started, I was looking for something small and local, but by now, I think it has more potential than that, let's see where it goes.
 
 ## How to install
 Using Python3. This app runs on the lightweight bottlepy framework, using mechanicalsoup for parsing.
@@ -40,6 +42,7 @@ Planning to add following books, in weekly basis:
 ## ToDo:
 Next steps are:
 - create Object-Oriented approach for books, like an interface including all needed methods, trying to analyse html tree structure, defining reoccuring tags etc.
+- adding a FAQ, descibing how to have same settings on phone, tablet and pc, including a contact possibility for personalification options.
 - error handling, especially of db
 - now every request is being sent to chabad.org, and there are no text being saved in DB, which leads to overload. I think I will include also the current copy of all the sections, replacing specific section.
 - eventually adjust the reading time to real learning speed
