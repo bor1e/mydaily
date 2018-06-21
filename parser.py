@@ -6,13 +6,13 @@ from libs.tanach import tanach
 class Parser():
 
     def __init__(self, user, books, speed):
-        self.user = user
+       # self.user = user
         self.books = books
         self.speed = speed
         self.word_count_total = 0
         self.browser = mechanicalsoup.StatefulBrowser()
 
-    def content(self):
+    def content(self, visitors):
         ''' 
         Iterate over each book, which was passed to the parser, and get its content. 
         The content is retrieved, based on its value in the sqlite DB.
@@ -23,10 +23,11 @@ class Parser():
         for key, value in self.__dict__['books'].items():
             content += getattr(self, key)(value)
 
-        return content
+        head = template('templates/head', totaltime=int((self.word_count_total/self.speed)/60), visitors=visitors)
+        return (head+content)
 
     # NOTE: 
-    # all the books, need to have aquivalent functions, to dynamically
+    # all the books, need to have aquivalent functions, to dynamically 
     # (TODO: user-based) retrieve the required content 
     # date already in use -> date_
     def tora(self, date_=None):
@@ -65,10 +66,10 @@ class Parser():
             
         # NOTE: next reserved word -> next_
         previous, today, next_ = self._days_prev_today_next(date_) 
-        link_user_category = self.user + '/tora'
-        buttons = template('templates/buttons', link=link_user_category, next=next_, previous=previous, today=today)
+        category = 'tora'
+        buttons = template('templates/buttons', link=category, next=next_, previous=previous, today=today)
         self.word_count_total += word_count
-        return template('templates/book', content=content, attr=int((word_count/self.speed)/60), title=(parasha+' - '+alia), category='tora', buttons=buttons)
+        return template('templates/book', content=content, attr=int((word_count/self.speed)/60), title=(parasha+' - '+alia), category=category, buttons=buttons)
    
 
     def hayomyom(self, date_=None):
@@ -88,10 +89,10 @@ class Parser():
             word_count += len(p.text.split())
 
         previous, today, next_ = self._days_prev_today_next(date_) 
-        link_user_category = self.user + '/hayomyom'
-        buttons = template('templates/buttons', link=link_user_category, next=next_, previous=previous, today=today)
+        category = 'hayomyom'
+        buttons = template('templates/buttons', link=category, next=next_, previous=previous, today=today)
         self.word_count_total += word_count
-        return template('templates/book', content=content, attr=int((word_count/self.speed)/60), title='HaYom Yom - '+hyy_day, category='hayomyom', buttons=buttons)
+        return template('templates/book', content=content, attr=int((word_count/self.speed)/60), title='HaYom Yom - '+hyy_day, category=category, buttons=buttons)
 
     def rambam(self, date_=None):
         if not date_:
@@ -119,10 +120,10 @@ class Parser():
             content += template('templates/rambam_list', rule_num=halacha_num, rule=halacha)
 
         previous, today, next_ = self._days_prev_today_next(date_) 
-        link_user_category = self.user + '/rambam'
-        buttons = template('templates/buttons', link=link_user_category, next=next_, previous=previous, today=today)
+        category = 'rambam'
+        buttons = template('templates/buttons', link=category, next=next_, previous=previous, today=today)
         self.word_count_total += word_count
-        return template('templates/book', content=content, attr=int((word_count/self.speed)/60), title=('Rambam - ' +title), category='rambam', buttons=buttons)
+        return template('templates/book', content=content, attr=int((word_count/self.speed)/60), title=('Rambam - ' +title), category=category, buttons=buttons)
 
 
     def tanach(self, aid=None, book=None, chapter=None, url=None):
@@ -148,10 +149,10 @@ class Parser():
         content, word_count = self._get_tanach_with_rashi_from_table_rows(content, word_count, trs, 'a')
         next_ = aid+1
         previous = aid -1
-        link_user_category = self.user + '/tanach'
-        buttons = template('templates/buttons', link=link_user_category, next=next_, previous=previous, today=None)
+        category = 'tanach'
+        buttons = template('templates/buttons', link=category, next=next_, previous=previous, today=None)
         self.word_count_total += word_count
-        return template('templates/book', content=content, attr=int((word_count/self.speed)/60), title=title,  category='tanach', buttons=buttons)
+        return template('templates/book', content=content, attr=int((word_count/self.speed)/60), title=title,  category=category, buttons=buttons)
 
     # beginn of helper functions
 

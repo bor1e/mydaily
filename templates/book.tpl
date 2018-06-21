@@ -3,9 +3,9 @@
         <div class="container">
             <p class="heading">
             %if attr > 1:
-               <small> reading time ca. {{!attr}}min</small>
+               <small>reading time ca. {{!attr}}min</small>
             %else:
-                <small> reading time less than a min</small>
+                <small>reading time less than a min</small>
             %end
             </p>
             <p class="title">{{!title}}</h1>

@@ -1,4 +1,4 @@
-from bottle import route, run, static_file, template, install, request, response, redirect
+from bottle import default_app, route, run, static_file, template, install, request, response, redirect
 import bottle
 from bottle_sqlite import SQLitePlugin
 from datetime import date, datetime
@@ -6,6 +6,8 @@ import random
 from parser import Parser
 from functools import wraps
 import logging
+
+app=application=default_app()
 
 logger = logging.getLogger('logfile')
 
@@ -43,8 +45,8 @@ def init(db):
     # check if user_id is set
     if request.get_cookie("user_id"):
         user_id = request.get_cookie("user_id")
-        redirect('/' + str(user_id))
-   
+        return user(db=db, user=user_id)
+
     # TODO eventually a collision possible by two users -> better user recognition
     # eventually a timestamp combination could be helpful, but 
     # this is meant for 'visitors' for friends, a username should be provided
@@ -56,7 +58,7 @@ def init(db):
     # how much minutes do I need for 1000 words?
     # reading_speed = (1000 / (136/42))/60
     db.execute('insert into bookmark values (?,?,?,?,?,?)', (user_id, today, today, today, 15785, (136/42.0),))
-    redirect('/' + str(user_id))
+    return user(db=db, user=str(user_id))
 
 @route('/adduser/<username>')
 def adduser(db, username):
@@ -67,9 +69,9 @@ def adduser(db, username):
         response.add_header('Set-Cookie', 'expires='+str(24*24*60*60*1000)) # cookie expires after 24 days
 
     db.execute('insert into bookmark values (?,?,?,?,?,?)', (username, today, today, today, 15785, (136/42.0),))
-    redirect('/' + str(username))
+    redirect('/')
 
-@route('/:user')
+#@route('/:user')
 def user(db, user):
     tora = db.execute('select tora from bookmark where user = ?', (user,)).fetchone()[0]
     hayomyom = db.execute('select hayomyom from bookmark where user = ?', (user,)).fetchone()[0]
@@ -82,18 +84,17 @@ def user(db, user):
         'tanach': tanach,
         }
     speed = db.execute('select reading_speed from bookmark where user = ?', (user,)).fetchone()[0]
-
+    visitors = str(db.execute('select count(*) from bookmark').fetchone()[0])
     parser = Parser(user=user, books=books, speed=speed)
-    return template('templates/index', content=parser.content())
+    return template('templates/index', content=parser.content(visitors))
 
-@route('/:user/<category>/<next>')
-def next(db, user, category, next):
-    assert category.isalpha()
-    # TODO check for success
-    query = 'update bookmark set ' + category + ' = \'' + next +'\' where user = \'' + user +'\';' 
-    db.execute(query)
+@route('/new_source', method='POST')
+def add_source(db):
+    source = request.forms.get('new_source')
+    #TODO: ERROR handling
+    db.execute('insert into sources values (?)', (source,))
+    redirect('/')
 
-    redirect('/'+str(user)+'#'+str(category))
 
 
 @route('/js/<filename>')
@@ -105,5 +106,27 @@ def js(filename):
 def css(filename):
     return static_file(filename, root='./css/')
 
+@route('/<category>/<next>')
+def next(db, category, next):
+    assert category.isalpha()
+    if not request.get_cookie("user_id"):
+        redriect('/#'+category)
+    user = request.get_cookie("user_id")
+    # TODO check for success
+    query = 'update bookmark set ' + category + ' = \'' + next +'\' where user = \'' + user +'\';' 
+    db.execute(query)
 
-run(host='0.0.0.0', port=8770, debug=True, quiet=True)
+    redirect('/#'+str(category))
+
+class StripPathMiddleware(object):
+    '''
+    Get that slash out of the request
+    '''
+    def __init__(self, a):
+        self.a = a
+    def __call__(self, e, h):
+        e['PATH_INFO'] = e['PATH_INFO'].rstrip('/')
+        return self.a(e, h)
+
+if __name__ == '__main__':
+    run(app=StripPathMiddleware(app), host='0.0.0.0', port=8770, debug=True, quiet=True)
