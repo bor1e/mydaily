@@ -7,7 +7,7 @@
       <div class="column is-6 is-offset-3">
         <h1 class="title">MYDAILY</h1>
         <h2 class="subtitle">
-          helps you to organise your <b>Jewish learning</b>.<br> Mydaily will remember where you left, so that you can just continue from there on.
+          helps you to organise your <b>Jewish learning</b>.<br> Mydaily will remember where you left, so that you can just continue from there on. Suited for Smartphone use.
         </h2>
       </div>
       <div class="column is-6 is-offset-3">
