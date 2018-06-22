@@ -43,28 +43,26 @@ install(log_to_logger)
 @route('/')
 @route('/<username>')
 def init(db, username=None):
-    # check if user_id is set
-    if request.get_cookie("user_id"):
-        user_id = request.get_cookie("user_id")
-        return user(db=db, user=user_id)
-    elif username:
+    if username:
+        assert username.isalpha()
+   
+    if username is not None:
         response.set_cookie('user_id', username)
-        exists = db.execute('select user from bookmark where user = ?', (username,)).fetchone()[0]
+        exists = db.execute('select user from bookmark where user = ?', (username,)).fetchone()
+        print('username: ' + username)
         if not exists: 
+            print('new user: ' + username)
             adduser(db, username)
-        return user(db=db, user=username)           
+        return user(db=db, user=username)
+    elif request.get_cookie("user_id"):
+        user_id = request.get_cookie("user_id")
+        return user(db=db, user=user_id)        
 
     # TODO eventually a collision possible by two users -> better user recognition
     # eventually a timestamp combination could be helpful, but 
     # this is meant for 'visitors' for friends, a username should be provided
     user_id = random.randint(10000000,99999999)
-    response.set_header('Set-Cookie', 'user_id='+str(user_id))
-    response.add_header('Set-Cookie', 'expires='+str(24*24*60*60*1000)) # cookie expires after 24 days
-    today = date.today().strftime("%m-%d-%Y")
-    # speed for 136 words, I needed 42 secs. which is 136/42 words per second 
-    # how much minutes do I need for 1000 words?
-    # reading_speed = (1000 / (136/42))/60
-    db.execute('insert into bookmark values (?,?,?,?,?,?)', (user_id, today, today, today, 15785, (136/42.0),))
+    adduser(db, user_id)
     return user(db=db, user=str(user_id))
 
 #@route('/adduser/<username>')
@@ -74,8 +72,11 @@ def adduser(db, username):
     if not request.get_cookie("user_id"):
         response.set_header('Set-Cookie', 'user_id='+str(username))
         response.add_header('Set-Cookie', 'expires='+str(24*24*60*60*1000)) # cookie expires after 24 days
-
+    # speed for 136 words, I needed 42 secs. which is 136/42 words per second 
+    # how much minutes do I need for 1000 words?
+    # reading_speed = (1000 / (136/42))/60
     db.execute('insert into bookmark values (?,?,?,?,?,?)', (username, today, today, today, 15785, (136/42.0),))
+    print('user added succesfully, redirecting to users name')
     redirect('/'+username)
 
 @route('/setuser/<username>')
