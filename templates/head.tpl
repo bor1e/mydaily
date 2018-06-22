@@ -27,7 +27,11 @@
           </a>
         </p>
       </div>                      
-                        
+      <div class="column is-6 is-offset-3">
+        <p class="is-size-7 has-text-centered">
+         provided with texts from <a href="chabad.org">chabad.org</a>
+        </p>
+      </div>     
       <div class="column is-6 is-offset-3">
         <p class="subtitle">Suggest a new Online Source for everyone:</p>
         <div class="box">
@@ -57,13 +61,17 @@
       </div>
       <div class="level-item has-text-centered">
         <div>
+          <span class="tag is-success is-large">
+            <a href="https://paypal.me/OnlineShiurim">Support MYDAILY</a>
+          </span>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div>
           <p class="heading">MYDAILY Visitors</p>
           <p class="title">{{!visitors}}</p>
         </div>
       </div>
     </nav>
-    <p class="is-size-7 has-text-centered">
-      provided with texts from <a href="chabad.org">chabad.org</a>
-    </p>
   </div>
 </section>

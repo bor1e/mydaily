@@ -114,7 +114,7 @@ def css(filename):
 def next(db, category, next):
     assert category.isalpha()
     if not request.get_cookie("user_id"):
-        redriect('/#'+category)
+        redirect('/#'+category)
     user = request.get_cookie("user_id")
     # TODO check for success
     query = 'update bookmark set ' + category + ' = \'' + next +'\' where user = \'' + user +'\';' 

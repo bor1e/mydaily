@@ -42,6 +42,7 @@ Planning to add following books, in weekly basis:
 ## ToDo:
 Next steps are:
 - create Object-Oriented approach for books, like an interface including all needed methods, trying to analyse html tree structure, defining reoccuring tags etc.
+- some unittesting would be nice, to avoid typos
 - adding a FAQ, descibing how to have same settings on phone, tablet and pc, including a contact possibility for personalification options.
 - error handling, especially of db
 - now every request is being sent to chabad.org, and there are no text being saved in DB, which leads to overload. I think I will include also the current copy of all the sections, replacing specific section.
