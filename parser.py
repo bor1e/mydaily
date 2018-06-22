@@ -103,7 +103,9 @@ class Parser():
         word_count = 0
         content = ''
         for verse in halachot:
-            halacha_num = int(verse.find('span', class_="versenum").text)
+            halacha_num = 0
+            if verse.find('span', class_="versenum"):
+                halacha_num = int(verse.find('span', class_="versenum").text)
             #remove(ignore)  hebrew text from verse paragraph
             hebrew_text = verse.find('span', class_="alternate_he")
             hebrew_text.extract()
