@@ -41,11 +41,18 @@ install(SQLitePlugin(dbfile='./bookmarks.db'))
 install(log_to_logger)
 
 @route('/')
-def init(db):
+@route('/<username>')
+def init(db, username=None):
     # check if user_id is set
     if request.get_cookie("user_id"):
         user_id = request.get_cookie("user_id")
         return user(db=db, user=user_id)
+    elif username:
+        response.set_cookie('user_id', username)
+        exists = db.execute('select user from bookmark where user = ?', (username,)).fetchone()[0]
+        if not exists: 
+            adduser(db, username)
+        return user(db=db, user=username)           
 
     # TODO eventually a collision possible by two users -> better user recognition
     # eventually a timestamp combination could be helpful, but 
@@ -60,7 +67,7 @@ def init(db):
     db.execute('insert into bookmark values (?,?,?,?,?,?)', (user_id, today, today, today, 15785, (136/42.0),))
     return user(db=db, user=str(user_id))
 
-@route('/adduser/<username>')
+#@route('/adduser/<username>')
 def adduser(db, username):
     assert username.isalpha()
     today = date.today().strftime("%m-%d-%Y")
@@ -69,13 +76,12 @@ def adduser(db, username):
         response.add_header('Set-Cookie', 'expires='+str(24*24*60*60*1000)) # cookie expires after 24 days
 
     db.execute('insert into bookmark values (?,?,?,?,?,?)', (username, today, today, today, 15785, (136/42.0),))
-    redirect('/')
+    redirect('/'+username)
 
 @route('/setuser/<username>')
 def setuser(username):
     assert username.isalpha()
-    response.set_header('Set-Cookie', 'user_id='+str(username))
-    redirect('/')
+    redirect('/'+username)
 
 #@route('/:user')
 def user(db, user):
