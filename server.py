@@ -1,8 +1,9 @@
 from bottle import default_app, route, run, static_file, template, install, request, response, redirect
 import bottle
 from bottle_sqlite import SQLitePlugin
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 import random
+import string
 from parser import Parser
 from functools import wraps
 import logging
@@ -40,44 +41,37 @@ def log_to_logger(fn):
 install(SQLitePlugin(dbfile='./bookmarks.db'))
 install(log_to_logger)
 
-@route('/')
 @route('/<username>')
+@route('/')
 def init(db, username=None):
     if username:
-        assert username.isalpha()
-   
-    if username is not None:
-        response.set_cookie('user_id', username)
+        response.set_cookie('user_id', username, expires=datetime.now()+timedelta(days=30))
         exists = db.execute('select user from bookmark where user = ?', (username,)).fetchone()
-        print('username: ' + username)
         if not exists: 
-            print('new user: ' + username)
-            adduser(db, username)
+            adduser(db=db, username=username)
         return user(db=db, user=username)
     elif request.get_cookie("user_id"):
-        user_id = request.get_cookie("user_id")
-        return user(db=db, user=user_id)        
-
-    # TODO eventually a collision possible by two users -> better user recognition
-    # eventually a timestamp combination could be helpful, but 
-    # this is meant for 'visitors' for friends, a username should be provided
-    user_id = random.randint(10000000,99999999)
-    adduser(db, user_id)
-    return user(db=db, user=str(user_id))
+        return user(db=db, user=request.get_cookie("user_id"))        
+    else:
+        # TODO eventually a collision possible by two users -> better user recognition
+        # eventually a timestamp combination could be helpful, but 
+        # this is meant for 'visitors' for friends, a username should be provided
+        user_id = ''.join(random.choices(string.ascii_uppercase, k=16))
+        adduser(db, user_id)
+        return user(db=db, user=str(user_id))
 
 #@route('/adduser/<username>')
 def adduser(db, username):
-    assert username.isalpha()
-    today = date.today().strftime("%m-%d-%Y")
+    assert username.isalpha() #favicon.ico error in chrome browser
     if not request.get_cookie("user_id"):
-        response.set_header('Set-Cookie', 'user_id='+str(username))
-        response.add_header('Set-Cookie', 'expires='+str(24*24*60*60*1000)) # cookie expires after 24 days
+        response.set_cookie('user_id', username, expires=datetime.now()+timedelta(days=30))
+
     # speed for 136 words, I needed 42 secs. which is 136/42 words per second 
     # how much minutes do I need for 1000 words?
     # reading_speed = (1000 / (136/42))/60
+    today = date.today().strftime("%m-%d-%Y")
     db.execute('insert into bookmark values (?,?,?,?,?,?)', (username, today, today, today, 15785, (136/42.0),))
-    print('user added succesfully, redirecting to users name')
-    redirect('/'+username)
+    #redirect('/'+username)
 
 @route('/setuser/<username>')
 def setuser(username):
