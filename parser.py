@@ -63,6 +63,7 @@ class Parser():
             content += '<p class="subtitle">' + str(chapters[chap].text) +'</p>'
             trs = tables[chap].find_all('tr')
             content, word_count = self._get_tanach_with_rashi_from_table_rows(content, word_count, trs, 'span')
+            content += '<br/>'
             
         # NOTE: next reserved word -> next_
         previous, today, next_ = self._days_prev_today_next(date_) 

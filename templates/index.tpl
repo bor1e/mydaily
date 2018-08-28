@@ -15,8 +15,9 @@
         {{!content}}
         <!-- progress bar -->
     </body>
-    <script src="./js/jquery-3.3.1.min.js"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--script src="js/jquery-3.3.1.min.js"></script-->
+  
     <script type="text/javascript">
      $(document).ready(function() {
         if (localStorage.getItem("scroll") != null) {
@@ -27,6 +28,22 @@
             localStorage.setItem("scroll", $(window).scrollTop());
         });
     });
+
+    /*$('input[type="checkbox"]').on('click', function(){
+		
+	var data = {};
+        data.name = $(this).attr('name');
+        console.log(data.name);
+
+        $.ajax({
+            type: "POST",
+            url: data.name,
+            data: data,
+        }).done(function(data) {
+                console.log(data);
+        });
+    });*/
+
 
      function confirm() {
         alert('Thank you, your suggestions was received!')

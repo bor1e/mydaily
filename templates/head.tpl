@@ -1,4 +1,4 @@
-<section class="hero is-warning is-fullheight">
+<section class="hero is-primary is-fullheight">
   <div class="hero-head">
     <p class="heading is-pulled-right">בס"ד</p>
   </div>
@@ -32,7 +32,7 @@
          provided with texts from <a href="chabad.org">chabad.org</a>
         </p>
       </div>     
-      <div class="column is-6 is-offset-3">
+      <!--div class="column is-6 is-offset-3">
         <p class="subtitle">Suggest a new Online Source for everyone:</p>
         <div class="box">
           <form action="/new_source" method="POST" onsubmit="confirm()">
@@ -48,7 +48,7 @@
             </div>
           </form>
         </div>
-      </div>          
+      </div-->          
     </div>
   </div>
   <div class="hero-foot">

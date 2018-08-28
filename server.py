@@ -94,6 +94,7 @@ def user(db, user):
     visitors = str(db.execute('select count(*) from bookmark').fetchone()[0])
     parser = Parser(user=user, books=books, speed=speed)
     return template('templates/index', content=parser.content(visitors))
+
     '''
     #@route('/new_source', method='POST')
     def add_source(db):
@@ -102,9 +103,11 @@ def user(db, user):
     db.execute('insert into sources values (?)', (source,))
     redirect('/')
     '''
+
 @route('/js/<filename>')
 def js(filename):
     return static_file(filename, root='js/')
+
 
 @route('/webfonts/<filename>')
 @route('/css/<filename>')
