@@ -14,7 +14,7 @@ logger = logging.getLogger('logfile')
 
 # set up the logger
 logger.setLevel(logging.INFO)
-file_handler = logging.FileHandler('logfile.log')
+file_handler = logging.FileHandler('logfile2.log')
 formatter = logging.Formatter('%(msg)s')
 file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(formatter)
@@ -94,22 +94,22 @@ def user(db, user):
     visitors = str(db.execute('select count(*) from bookmark').fetchone()[0])
     parser = Parser(user=user, books=books, speed=speed)
     return template('templates/index', content=parser.content(visitors))
-
-@route('/new_source', method='POST')
-def add_source(db):
+    '''
+    #@route('/new_source', method='POST')
+    def add_source(db):
     source = request.forms.get('new_source')
     #TODO: ERROR handling
     db.execute('insert into sources values (?)', (source,))
     redirect('/')
-
+    '''
 @route('/js/<filename>')
 def js(filename):
-    return static_file(filename, root='./js/')
+    return static_file(filename, root='js/')
 
 @route('/webfonts/<filename>')
 @route('/css/<filename>')
 def css(filename):
-    return static_file(filename, root='./css/')
+    return static_file(filename, root='css/')
 
 @route('/<category>/<next>')
 def next(db, category, next):

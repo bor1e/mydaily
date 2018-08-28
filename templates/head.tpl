@@ -1,4 +1,4 @@
-<section class="hero is-primary is-fullheight">
+<section class="hero is-warning is-fullheight">
   <div class="hero-head">
     <p class="heading is-pulled-right">בס"ד</p>
   </div>
